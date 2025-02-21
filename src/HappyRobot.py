@@ -43,6 +43,7 @@ def verify_dot():
 
             print(data)
             if data and data['content']['carrier']['allowedToOperate'] == 'Y':
+                
                 return jsonify({"dot_number": dot_number, "valid": True}), 200
 
         
@@ -56,29 +57,4 @@ def verify_dot():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
-
-###FMSCA API ENDPOINT
-
-# fmsca_url = "https://mobile.fmcsa.dot.gov/qc/services/carriers/687592?webKey=cdc33e44d693a3a58451898d4ec9df862c65b954"
-
-
-###
-
-# r = requests.get(fmsca_url)
-# # print(r.status_code)
-# print(r.json())
-
-### MC Number
-
-# api_key = "cdc33e44d693a3a58451898d4ec9df862c65b954"
-# mc_number = "687592"
-# url = f'https://api.tms.fmcsa.dot.gov/v1/motor-carriers/{mc_number}'
-
-# headers = {
-#     'Authorization': f'Bearer {api_key}'
-# }
-
-# response = requests.get(url,headers=headers)
-
-# print(response.status_code)
+    app.run()
