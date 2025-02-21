@@ -24,6 +24,11 @@ def get_load(reference_number):
     else:
         abort(404, description="Load not found") 
 
+
+
+###If status_code == 400: the dot number is not in the correct format, it's either too long or malformed
+###If the dot number exists, the content will not be none otherwise if the dot number format is valid but it doesn't exits, then it will return content: empty
+###Make conditions for these cases and return accordingly.
 @app.route('/verify_dot',methods = ['GET'])
 
 def verify_dot():
@@ -41,15 +46,16 @@ def verify_dot():
         if response.status_code == 200:
             data = response.json()
 
-            print(data)
+            if data and data['content'] == None:
+                return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
+            
             if data and data['content']['carrier']['allowedToOperate'] == 'Y':
                 
                 return jsonify({"dot_number": dot_number, "valid": True}), 200
 
         
         else:
-            
-            return jsonify({"error": "Failed to verify DOT number"}), 500
+            return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
         
     except requests.exceptions.RequestException as e:
 
