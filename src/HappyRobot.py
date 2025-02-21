@@ -1,29 +1,28 @@
 import requests
 import json
 from flask import Flask, jsonify, request, abort
+from pathlib import Path
+import pandas as pd
 
 
 app = Flask(__name__)
 fmsca_apiKey = "cdc33e44d693a3a58451898d4ec9df862c65b954"
 
-def load_csv_data():
-    with open('loads.csv', mode='r') as file:
-        reader = csv.DictReader(file)
-        loads = {row['reference_number']: row for row in reader}
-    return loads
+script_dir = Path(__file__).parent
+csv_file_path = script_dir.parent / "data" / "HappyRobot_Loadsdata.csv"
+df = pd.read_csv(csv_file_path)
 
 # API Endpoint to retrieve load details by reference_number
 @app.route('/loads/<reference_number>', methods=['GET'])
 def get_load(reference_number):
-    loads = load_csv_data()
-    
+    filtered_row = df[df.iloc[:, 0] == reference_number]
     # Check if the reference_number exists in the data
-    load_details = loads.get(reference_number)
-    
-    if load_details:
-        return jsonify(load_details)  # Return load details in JSON format
+    if not filtered_row.empty:
+       # Convert the row to a dictionary (assuming a single match)
+        load_details = filtered_row.iloc[0].to_dict()
+        return jsonify(load_details)
     else:
-        abort(404, description="Load not found")  # Return 404 if not found
+        abort(404, description="Load not found") 
 
 @app.route('/verify_dot',methods = ['GET'])
 
