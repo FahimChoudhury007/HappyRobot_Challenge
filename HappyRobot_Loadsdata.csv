@@ -1,0 +1,54 @@
+reference_number,origin,destination,equipment_type,rate,commodity
+REF37002,"Denver, CO","Chicago, IL",Reefer,1889,Machinery
+REF22923,"Los Angeles, CA","Chicago, IL",Dry Van or Flatbed,826,Machinery
+REF11075,"Detroit, MI","Las Vegas, NV",Reefer,638,Textiles
+REF23308,"Phoenix, AZ","San Francisco, CA",Flatbed,1894,Electronics
+REF77865,"Dallas, TX","Nashville, TN",Dry Van,995,Machinery
+REF66901,"Dallas, TX","Nashville, TN",Reefer,1731,Textiles
+REF45701,"Seattle, WA","Chicago, IL",Reefer,551,Pharmaceuticals
+REF19715,"Houston, TX","Denver, CO",Reefer,1727,Pharmaceuticals
+REF74711,"Detroit, MI","Nashville, TN",Flatbed,1788,Textiles
+REF17029,"Miami, FL","Detroit, MI",Dry Van,579,Textiles
+REF36535,"Los Angeles, CA","Las Vegas, NV",Dry Van or Flatbed,1662,Furniture
+REF19953,"Miami, FL","Minneapolis, MN",Flatbed,645,Electronics
+REF74019,"Los Angeles, CA","New York, NY",Flatbed,752,Pharmaceuticals
+REF23606,"Dallas, TX","San Francisco, CA",Dry Van or Flatbed,1146,Machinery
+REF68253,"Phoenix, AZ","Las Vegas, NV",Dry Van,533,Furniture
+REF83080,"Phoenix, AZ","Detroit, MI",Dry Van,580,Textiles
+REF10546,"Detroit, MI","New York, NY",Reefer,1977,Automotive Parts
+REF78110,"Phoenix, AZ","Chicago, IL",Flatbed,1579,Industrial Equipment
+REF59609,"Houston, TX","Chicago, IL",Dry Van,952,Machinery
+REF70165,"Houston, TX","Chicago, IL",Flatbed,1123,Automotive Parts
+REF30323,"Miami, FL","Minneapolis, MN",Flatbed,1083,Construction Materials
+REF92025,"Seattle, WA","Detroit, MI",Dry Van or Flatbed,1151,Machinery
+REF25212,"Denver, CO","Minneapolis, MN",Dry Van or Flatbed,1357,Textiles
+REF15020,"Phoenix, AZ","Chicago, IL",Reefer,925,Textiles
+REF12688,"Atlanta, GA","Minneapolis, MN",Flatbed,1214,Electronics
+REF11297,"Dallas, TX","Las Vegas, NV",Reefer,1893,Construction Materials
+REF11910,"Boston, MA","Chicago, IL",Dry Van,1125,Construction Materials
+REF83284,"Phoenix, AZ","Austin, TX",Dry Van or Flatbed,1503,Industrial Equipment
+REF29398,"Los Angeles, CA","Austin, TX",Dry Van or Flatbed,1842,Pharmaceuticals
+REF23176,"Los Angeles, CA","New York, NY",Dry Van or Flatbed,1465,Electronics
+REF79833,"Miami, FL","New York, NY",Dry Van,1328,Machinery
+REF60780,"Atlanta, GA","Chicago, IL",Dry Van or Flatbed,643,Agricultural Products
+REF44208,"Boston, MA","Austin, TX",Reefer,1915,Automotive Parts
+REF31940,"Los Angeles, CA","Denver, CO",Dry Van or Flatbed,662,Construction Materials
+REF19748,"Boston, MA","New York, NY",Flatbed,1077,Food Products
+REF60619,"Houston, TX","Detroit, MI",Flatbed,1465,Textiles
+REF85753,"Seattle, WA","San Francisco, CA",Flatbed,634,Industrial Equipment
+REF33960,"Boston, MA","Las Vegas, NV",Dry Van or Flatbed,513,Pharmaceuticals
+REF86296,"Denver, CO","Nashville, TN",Reefer,1326,Agricultural Products
+REF15102,"Miami, FL","Chicago, IL",Flatbed,876,Agricultural Products
+REF11970,"Seattle, WA","Nashville, TN",Dry Van,1743,Textiles
+REF27325,"Boston, MA","Detroit, MI",Flatbed,1766,Pharmaceuticals
+REF55824,"Denver, CO","Nashville, TN",Dry Van or Flatbed,1197,Food Products
+REF87671,"Denver, CO","Detroit, MI",Dry Van or Flatbed,855,Agricultural Products
+REF55723,"Detroit, MI","Austin, TX",Flatbed,1263,Furniture
+REF91879,"Denver, CO","New York, NY",Flatbed,1364,Textiles
+REF67327,"Seattle, WA","Philadelphia, PA",Flatbed,1095,Automotive Parts
+REF88349,"Los Angeles, CA","Philadelphia, PA",Dry Van or Flatbed,1707,Construction Materials
+REF68582,"Dallas, TX","Minneapolis, MN",Dry Van,977,Electronics
+REF46871,"Denver, CO","Nashville, TN",Flatbed,1894,Industrial Equipment
+REF68617,"Miami, FL","Minneapolis, MN",Flatbed,1168,Food Products
+REF16118,"Denver, CO","Detroit, MI",Reefer,1106,Furniture
+REF80935,"Miami, FL","Minneapolis, MN",Flatbed,1405,Electronics
