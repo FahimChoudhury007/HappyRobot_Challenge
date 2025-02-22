@@ -39,7 +39,7 @@ def verify_dot():
     if not dot_number and not mc_number:
         return "Please provide dot_number or mc_number"
     
-    if not mc_number or (mc_number and dot_number):
+    if not mc_number:
         fmsca_url = f"https://mobile.fmcsa.dot.gov/qc/services/carriers/{dot_number}?webKey={fmsca_apiKey}"
         try:
             response = requests.get(fmsca_url)
@@ -71,36 +71,35 @@ def verify_dot():
             return "Exception"
 
 
-    if not dot_number:
-        fmsca_url = f"https://mobile.fmcsa.dot.gov/qc/services/carriers/docket-number/{mc_number}?webKey={fmsca_apiKey}"
-        try:
-            response = requests.get(fmsca_url)
-            
-            if response.status_code == 200:
-                data = response.json()
+    fmsca_url = f"https://mobile.fmcsa.dot.gov/qc/services/carriers/docket-number/{mc_number}?webKey={fmsca_apiKey}"
+    try:
+        response = requests.get(fmsca_url)
+        
+        if response.status_code == 200:
+            data = response.json()
 
-                if data['content'] == None:
-                    # return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
-                    return "Please tell the user that this dot_number does not exit."
+            if data['content'] == None:
+                # return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
+                return "Please tell the user that this dot_number does not exit."
+            
+            if data['content'][0]['carrier']['allowedToOperate'] == 'Y':
+                formatted_data = {  "dot_number": dot_number,
+                                    "carrier_name": data["content"][0]["carrier"]['legalName'],
+                                    "allowed_to_operate": data['content'][0]['carrier']['allowedToOperate'],
+                                    "valid": True
+                                }
                 
-                if data['content'][0]['carrier']['allowedToOperate'] == 'Y':
-                    formatted_data = {  "dot_number": dot_number,
-                                        "carrier_name": data["content"][0]["carrier"]['legalName'],
-                                        "allowed_to_operate": data['content'][0]['carrier']['allowedToOperate'],
-                                        "valid": True
-                                    }
-                    
-                    # return jsonify({"dot_number": dot_number, "valid": True}), 200
-                    return jsonify(formatted_data)
+                # return jsonify({"dot_number": dot_number, "valid": True}), 200
+                return jsonify(formatted_data)
 
-            
-            else:
-                # return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
-                return "Please tell them the dot_number is not in the correct format. It's either malformed or too long."
-            
-        except requests.exceptions.RequestException as e:
+        
+        else:
+            # return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
+            return "Please tell them the dot_number is not in the correct format. It's either malformed or too long."
+        
+    except requests.exceptions.RequestException as e:
 
-            return "Exception"
+        return "Exception"
 
 
 if __name__ == "__main__":
