@@ -7,7 +7,7 @@ import pandas as pd
 
 app = Flask(__name__)
 fmsca_apiKey = "cdc33e44d693a3a58451898d4ec9df862c65b954"
-
+flask_api_key = "aetgjd789njnjquij082nbjdn57sbjnk5"
 script_dir = Path(__file__).parent
 csv_file_path = script_dir.parent / "data" / "HappyRobot_Loadsdata.csv"
 df = pd.read_csv(csv_file_path)
@@ -33,6 +33,11 @@ def get_load():
 @app.route('/verify_dot',methods = ['GET'])
 
 def verify_dot():
+    api_key = request.headers.get("API-KEY")
+
+    if api_key != flask_api_key:
+        return jsonify({"error": "Unauthorized access"}), 403
+    
     ### Have to take care of the case where both mc_number and dot_number are provided.
     dot_number = request.args.get('dot_number')
     mc_number = request.args.get('mc_number')
