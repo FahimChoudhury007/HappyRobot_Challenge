@@ -21,19 +21,14 @@ def get_load():
 
     reference_number = request.args.get('reference_number')
     filtered_row = df[df.iloc[:, 0] == f'REF{reference_number}']
-    # Check if the reference_number exists in the data
     if not filtered_row.empty:
-       # Convert the row to a dictionary (assuming a single match)
         load_details = filtered_row.iloc[0].to_dict()
         return jsonify(load_details)
     else:
         abort(404, description="Load not found") 
 
 
-
-###If status_code == 400: the dot number is not in the correct format, it's either too long or malformed
-###If the dot number exists, the content will not be none otherwise if the dot number format is valid but it doesn't exits, then it will return content: empty
-###Make conditions for these cases and return accordingly.
+##Proxy API to verify carrier details
 @app.route('/verify_dot',methods = ['GET'])
 
 def verify_dot():
@@ -42,7 +37,6 @@ def verify_dot():
     if api_key != flask_api_key:
         return jsonify({"error": "Unauthorized access"}), 403
     
-    ### Have to take care of the case where both mc_number and dot_number are provided.
     dot_number = request.args.get('dot_number')
     mc_number = request.args.get('mc_number')
 
