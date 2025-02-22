@@ -46,14 +46,19 @@ def verify_dot():
         if response.status_code == 200:
             data = response.json()
 
-            if data and data['content'] == None:
+            if data['content'] == None:
                 # return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
                 return "Please tell the user that this dot_number does not exit."
             
-            if data and data['content']['carrier']['allowedToOperate'] == 'Y':
+            if data['content']['carrier']['allowedToOperate'] == 'Y':
+                formatted_data = {  "dot_number": dot_number,
+                                    "carrier_name": data["content"]["carrier"]['legalName'],
+                                    "allowed_to_operate": data['content']['carrier']['allowedToOperate'],
+                                    "valid": True
+                                }
                 
                 # return jsonify({"dot_number": dot_number, "valid": True}), 200
-                return "Please tell the user that the credentials are valid"
+                return jsonify(formatted_data)
 
         
         else:
