@@ -47,15 +47,18 @@ def verify_dot():
             data = response.json()
 
             if data and data['content'] == None:
-                return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
+                # return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
+                return "Please tell the user that this dot_number does not exit."
             
             if data and data['content']['carrier']['allowedToOperate'] == 'Y':
                 
-                return jsonify({"dot_number": dot_number, "valid": True}), 200
+                # return jsonify({"dot_number": dot_number, "valid": True}), 200
+                return "Please tell the user that the credentials are valid"
 
         
         else:
-            return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
+            # return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
+            return "Please tell them the dot_number is not in the correct format. It's either malformed or too long."
         
     except requests.exceptions.RequestException as e:
 
