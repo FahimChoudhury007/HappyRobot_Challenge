@@ -15,6 +15,10 @@ df = pd.read_csv(csv_file_path)
 # API Endpoint to retrieve load details by reference_number
 @app.route('/loads', methods=['GET'])
 def get_load():
+    api_key = request.headers.get("API-KEY")
+    if api_key != flask_api_key:
+        return jsonify({"error": "Unauthorized access"}), 403
+
     reference_number = request.args.get('reference_number')
     filtered_row = df[df.iloc[:, 0] == f'REF{reference_number}']
     # Check if the reference_number exists in the data
