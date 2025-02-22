@@ -16,7 +16,7 @@ df = pd.read_csv(csv_file_path)
 @app.route('/loads', methods=['GET'])
 def get_load():
     reference_number = request.args.get('reference_number')
-    filtered_row = df[df.iloc[:, 0] == reference_number]
+    filtered_row = df[df.iloc[:, 0] == f'REF{reference_number}']
     # Check if the reference_number exists in the data
     if not filtered_row.empty:
        # Convert the row to a dictionary (assuming a single match)
