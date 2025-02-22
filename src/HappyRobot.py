@@ -13,8 +13,9 @@ csv_file_path = script_dir.parent / "data" / "HappyRobot_Loadsdata.csv"
 df = pd.read_csv(csv_file_path)
 
 # API Endpoint to retrieve load details by reference_number
-@app.route('/loads/<reference_number>', methods=['GET'])
-def get_load(reference_number):
+@app.route('/loads', methods=['GET'])
+def get_load():
+    reference_number = request.args.get('reference_number')
     filtered_row = df[df.iloc[:, 0] == reference_number]
     # Check if the reference_number exists in the data
     if not filtered_row.empty:
@@ -48,7 +49,6 @@ def verify_dot():
                 data = response.json()
                 print(data)
                 if data['content'] == None:
-                    # return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
                     return "Please tell the user that this dot_number does not exit."
                 
                 if data['content']['carrier']['allowedToOperate'] == 'Y':
@@ -58,12 +58,12 @@ def verify_dot():
                                         "valid": True
                                     }
                     
-                    # return jsonify({"dot_number": dot_number, "valid": True}), 200
                     return jsonify(formatted_data)
-
+                
+                if data['content']['carrier']['allowedToOperate'] == 'N':
+                    return "It seems like you are not allowed to operate according to the mc_number provided."
             
             else:
-                # return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
                 return "Please tell them the dot_number is not in the correct format. It's either malformed or too long."
             
         except requests.exceptions.RequestException as e:
@@ -79,7 +79,6 @@ def verify_dot():
             data = response.json()
 
             if data['content'] == None:
-                # return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
                 return "Please tell the user that this mc_number does not exit."
             
             if data['content'][0]['carrier']['allowedToOperate'] == 'Y':
@@ -89,12 +88,13 @@ def verify_dot():
                                     "valid": True
                                 }
                 
-                # return jsonify({"dot_number": dot_number, "valid": True}), 200
                 return jsonify(formatted_data)
+            
+            if data['content'][0]['carrier']['allowedToOperate'] == 'N':
+                return "It seems like you are not allowed to operate according to the mc_number provided."
 
         
         else:
-            # return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
             return "Please tell them the mc_number is not in the correct format. It's either malformed or too long."
         
     except requests.exceptions.RequestException as e:
