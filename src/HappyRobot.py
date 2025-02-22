@@ -49,7 +49,7 @@ def verify_dot():
                 print(data)
                 if data['content'] == None:
                     # return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
-                    return "Please tell the user that this mc_number does not exit."
+                    return "Please tell the user that this dot_number does not exit."
                 
                 if data['content']['carrier']['allowedToOperate'] == 'Y':
                     formatted_data = {  "dot_number": dot_number,
@@ -64,7 +64,7 @@ def verify_dot():
             
             else:
                 # return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
-                return "Please tell them the mc_number is not in the correct format. It's either malformed or too long."
+                return "Please tell them the dot_number is not in the correct format. It's either malformed or too long."
             
         except requests.exceptions.RequestException as e:
 
@@ -80,7 +80,7 @@ def verify_dot():
 
             if data['content'] == None:
                 # return jsonify({"dot_number": "This dot number doesn't exist", "valid": False})
-                return "Please tell the user that this dot_number does not exit."
+                return "Please tell the user that this mc_number does not exit."
             
             if data['content'][0]['carrier']['allowedToOperate'] == 'Y':
                 formatted_data = {  "dot_number": dot_number,
@@ -95,7 +95,7 @@ def verify_dot():
         
         else:
             # return jsonify({"error": "This Dot number is not in the correct format. It's either malformed or too long"}), 500
-            return "Please tell them the dot_number is not in the correct format. It's either malformed or too long."
+            return "Please tell them the mc_number is not in the correct format. It's either malformed or too long."
         
     except requests.exceptions.RequestException as e:
 
