@@ -23,7 +23,7 @@ def get_load():
     filtered_row = df[df.iloc[:, 0] == f'REF{reference_number}']
     if not filtered_row.empty:
         load_details = filtered_row.iloc[0].to_dict()
-        return jsonify(load_details)
+        return jsonify(load_details), 200
     else:
         abort(404, description="Load not found") 
 
@@ -41,7 +41,8 @@ def verify_dot():
     mc_number = request.args.get('mc_number')
 
     if not dot_number and not mc_number:
-        return "Please provide dot_number or mc_number"
+        return jsonify({"error": "Please provide dot_number or mc_number"}), 400 
+
     
     if not mc_number:
         fmsca_url = f"https://mobile.fmcsa.dot.gov/qc/services/carriers/{dot_number}?webKey={fmsca_apiKey}"
@@ -50,9 +51,8 @@ def verify_dot():
             
             if response.status_code == 200:
                 data = response.json()
-                print(data)
-                if data['content'] == None:
-                    return "Please tell the user that this dot_number does not exit."
+                if data['content'] == None or data['content'] == []:
+                    return jsonify({"error": "Please tell the user that this dot_number does not exist."}), 404
                 
                 if data['content']['carrier']['allowedToOperate'] == 'Y':
                     formatted_data = {  "dot_number": dot_number,
@@ -61,17 +61,20 @@ def verify_dot():
                                         "valid": True
                                     }
                     
-                    return jsonify(formatted_data)
+                    return jsonify(formatted_data), 200
                 
                 if data['content']['carrier']['allowedToOperate'] == 'N':
-                    return "It seems like you are not allowed to operate according to the mc_number provided."
+                    return jsonify({"Description": "It seems like you are not allowed to operate according to the dot_number provided."}), 403
+                    # abort(403, description="It seems like you are not allowed to operate according to the mc_number provided.")
+
             
             else:
-                return "Please tell them the dot_number is not in the correct format. It's either malformed or too long."
+                abort(400, description="Please tell them the dot_number is not in the correct format. It's either malformed or too long.")
+
             
         except requests.exceptions.RequestException as e:
+            return jsonify({"error": "An internal server error occurred."}), 500
 
-            return "Exception"
 
 
     fmsca_url = f"https://mobile.fmcsa.dot.gov/qc/services/carriers/docket-number/{mc_number}?webKey={fmsca_apiKey}"
@@ -81,8 +84,9 @@ def verify_dot():
         if response.status_code == 200:
             data = response.json()
 
-            if data['content'] == None:
-                return "Please tell the user that this mc_number does not exit."
+            if data['content'] == None or data['content'] == []:
+                return jsonify({"Description":"Please tell the user that this mc_number does not exit."}), 404
+                # return "Please tell the user that this mc_number does not exit."
             
             if data['content'][0]['carrier']['allowedToOperate'] == 'Y':
                 formatted_data = {  "dot_number": dot_number,
@@ -91,18 +95,20 @@ def verify_dot():
                                     "valid": True
                                 }
                 
-                return jsonify(formatted_data)
+                return jsonify(formatted_data),200
             
             if data['content'][0]['carrier']['allowedToOperate'] == 'N':
-                return "It seems like you are not allowed to operate according to the mc_number provided."
+                return jsonify({"Description": "It seems like you are not allowed to operate according to the mc_number provided."}), 403
+                # return "It seems like you are not allowed to operate according to the mc_number provided."
 
         
         else:
-            return "Please tell them the mc_number is not in the correct format. It's either malformed or too long."
+            abort(400, description="Please tell them the mc_number is not in the correct format. It's either malformed or too long.")
+            # return "Please tell them the mc_number is not in the correct format. It's either malformed or too long."
         
-    except requests.exceptions.RequestException as e:
-
-        return "Exception"
+    except requests.exceptions.RequestException as e:    
+        return jsonify({"error": "An internal servor error occurred"}), 500
+        # return "Exception"
 
 
 if __name__ == "__main__":
