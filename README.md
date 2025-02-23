@@ -1,0 +1,1 @@
+The main file is inside the src folder, it is named "HappyRobot.py". The requirements to run the same are also in the src folder in requirements.txt. The load database is inside the data folder which is being accessed for load detail extraction.
